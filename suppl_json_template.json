@@ -1,0 +1,79 @@
+{
+    "title" :
+        "A Templated Comparison",
+
+    "packages" : [
+        "subfig",
+        "comment",
+        "enumitem"
+    ],
+
+    "links_color" : "0,127,127",
+    
+    "anonymous" : false,
+
+    "authors" : [
+        {
+            "name" : "First Author",
+            "institution_id" : [1, 2]
+        },
+        {
+            "name" : "Second Author",
+            "institution_id" : [3]
+        },
+        {
+            "name" : "Third Author",
+            "institution_id" : [1]
+        }
+    ],
+
+    "institutions" : [
+        "NVIDIA",
+        "A University",
+        "Another University"
+    ],
+
+    "instructions" :
+        "Please view this document in presentation mode, e.g.,\n\\begin{itemize}[leftmargin=7cm, noitemsep]\n\\item[Acrobat Adobe Reader:]  \\texttt{Ctrl+L} on Windows and \\texttt{Command+L} on Mac\n\\item[Evince (Ubuntu):]  \\texttt{F5}\n\\item[Preview.app (OSX):]  \\texttt{Command+Shift+F}.\n\\end{itemize}\nTo compare the images resulting from different methods, please click the corresponding hyperlinks below each figure. For each image we provide a few details that are worth observing.\n\\begin{center}\n\\color{red}{\\textbf{It is important to look at the results in presentation mode so that the images are aligned.}}\n\\end{center}",
+
+    "comparisons" : [
+    
+    {
+        "caption" : "Comment for this comparison. This is a good place to mention to the viewer what to look for in this example.",
+        "fig_width_relative" : 0.8,
+        "inputs": [
+            "images/ground_truth.png",
+            "images/low_rez.png",
+            "images/super_rez_method1.png",
+            "images/super_rez_method2.png"
+        ],
+        "labels" : [
+            "Ground Truth",
+            "Low Resolution",
+            "Super-resolution using L2",
+            "Super-resolution using MS-SSIM"
+        ],
+        "crops" : [
+        ],
+        "crops_height_in" : 1 
+    }
+
+    {
+        "caption": "This is the caption for the second comparison. How blurry is that!?!",
+        "fig_width_relative" : 1,
+        "inputs": [
+            "images/blurry.jpg",
+            "images/sharp.jpg"
+        ],
+        "labels" : [
+            "Blurry Image",
+            "Sharp Image"
+        ],
+        "crops" : [
+            [256,256,512,384],
+            [640,128,704,192]
+        ],
+        "crops_height_in" : 2 
+    }
+    ]
+}
