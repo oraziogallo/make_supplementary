@@ -233,8 +233,7 @@ def add_comparison(comparison, comp_id, fig_id):
 
 
 def main():
-    # json_name = sys.argv[1]
-    json_name = "suppl_json_template.json"
+    json_name = sys.argv[1]
     json_data = open_and_check(json_name)
     if not json_data:
         print('Terminating.')
