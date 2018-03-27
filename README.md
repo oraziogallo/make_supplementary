@@ -3,6 +3,8 @@
 #### What is this code for? ####
 This is a small Python utility to generate a PDF file that allows for easier comparisons between the images that are output by different algorithms. For instance, you can use this to compare different denoising methods on the same images. The idea is that the viewer can just flip between the results so that differences are easier to appreciate. The output is Latex code that can be compiled into PDF.
 
+Take a look at [this example](https://drive.google.com/file/d/17Itta-z89lpWUdvUjpafKzJRSLoxHF5c/view) of a document auto-generated with this script.
+
 While the script can be used and modified freely (MIT License), I ask that the link to this repository is not removed from the final PDF.
 
 #### Requisites ####
