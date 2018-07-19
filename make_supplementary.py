@@ -50,11 +50,11 @@ def sep(line):
     return line.replace('\\', '/')
 
 
-# Parse authors and insitutions     
+# Parse authors and insitutions
 def create_authors(authors, institutions):
     authors_str = "\\author{"
     max_institution_id = 0
-    
+
     # List of authors
     for a, author in enumerate(authors):
         if a > 0:
@@ -80,7 +80,7 @@ def create_authors(authors, institutions):
         for i, institution in enumerate(institutions):
             if i > 0:
                 authors_str += "\hspace{1.5em} "
-            authors_str += "$^" + str(i+1) + "$" + institution
+            authors_str += "$^" + str(i + 1) + "$" + institution
         authors_str += "}"
 
     authors_str += "}\n\n"
@@ -143,11 +143,12 @@ def crop_images(img_names, crops):
         img_name, ignore = os.path.splitext(img_name)
         crop_names_tmp = []
         for crop_id, crop in enumerate(crops):
-            # PIL crop:  left, top, right, and bottom pixel
-            result = tmp_image.crop((crop[0], crop[1], crop[2], crop[3]))
-            crop_names_tmp.extend([sep(out_dir + os.sep + img_name + "_crop_" + str(crop_id) + ".png")])
-            # print crop_names_tmp[-1]
-            result.save(crop_names_tmp[-1])
+            crop_filename = sep(out_dir + os.sep + img_name + "_crop_" + str(crop_id) + ".png")
+            if not os.path.isfile(crop_filename):
+                # PIL crop:  left, top, right, and bottom pixel
+                result = tmp_image.crop((crop[0], crop[1], crop[2], crop[3]))
+                result.save(crop_filename)
+            crop_names_tmp.extend([crop_filename])
         crop_names.append(crop_names_tmp)
     return crop_names
 
@@ -163,7 +164,7 @@ def create_links(comparison, comp_id, fig_id):
     tmp = 0
     tex += "\\noindent\\newline\\vspace{3mm}\n"
     for lbl in comparison["labels"]:
-        tex += "\\hyperlink{fig:" + str(fig_id+tmp) + "}{\\Large{" + lbl + "}}\\newline\\vspace{3mm}\n"
+        tex += "\\hyperlink{fig:" + str(fig_id + tmp) + "}{\\Large{" + lbl + "}}\\newline\\vspace{3mm}\n"
         tmp += 1
     tex += "\\\\\n"
     tex += "\\begin{center}\n"
@@ -171,11 +172,10 @@ def create_links(comparison, comp_id, fig_id):
         # Making the text white and with no link to maintain the layout
         tex += "\\textcolor{white}{$\\leftarrow$ Previous Comparison}\\qquad\n"
     else:
-        tex += "\\hyperlink{comparison:" + str(comp_id-1) + "}{$\\leftarrow$ Previous Comparison}\\qquad\n"
-    tex += "\\hyperlink{comparison:" + str(comp_id+1) + "}{Next Comparison $\\rightarrow$}"
+        tex += "\\hyperlink{comparison:" + str(comp_id - 1) + "}{$\\leftarrow$ Previous Comparison}\\qquad\n"
+    tex += "\\hyperlink{comparison:" + str(comp_id + 1) + "}{Next Comparison $\\rightarrow$}"
     tex += "\\end{center}\n"
     return tex
-
 
 
 def add_comparison(comparison, comp_id, fig_id):
@@ -185,7 +185,7 @@ def add_comparison(comparison, comp_id, fig_id):
     first_image = True
     fig_w = comparison["fig_width_relative"]
     crops_height = comparison["crops_height_in"]
-    
+
     crops = comparison["crops"]
     if crops:
         pix_w, pix_h = get_num_pixels(comparison["inputs"][0])
@@ -200,7 +200,7 @@ def add_comparison(comparison, comp_id, fig_id):
 
         tex += "\\begin{figure*}[h!]\n"
         tex += "\\centering\n"
-        
+
         if crops:
             # Generate the crops
             crops_path = crop_images(comparison["inputs"], crops)
@@ -211,8 +211,8 @@ def add_comparison(comparison, comp_id, fig_id):
             for crop_id in range(len(crops)):
                 # JSON file has: left, upper, right, and bottom
                 # tikz: (left,bottom) rectangle (right,top);
-                tex += "\\draw[blue, ultra thick, rounded corners] (" + str(crops[crop_id][0]) + "," + str(pix_h-crops[crop_id][3]) + ") rectangle (" + str(crops[crop_id][2]) + ", " + str(pix_h-crops[crop_id][1]) + ");\n"
-            tex += "\\draw[black,thin] (0,0) rectangle + (" + str(pix_w) + "," + str(pix_h) +  ");\n"
+                tex += "\\draw[blue, ultra thick, rounded corners] (" + str(crops[crop_id][0]) + "," + str(pix_h - crops[crop_id][3]) + ") rectangle (" + str(crops[crop_id][2]) + ", " + str(pix_h - crops[crop_id][1]) + ");\n"
+            tex += "\\draw[black,thin] (0,0) rectangle + (" + str(pix_w) + "," + str(pix_h) + ");\n"
             tex += "\\end{tikzpicture}\\\\\n"
             tex += "\\vspace{1mm}\n"
             for crop_id in range(len(crops)):
@@ -227,7 +227,7 @@ def add_comparison(comparison, comp_id, fig_id):
         tex += "\\begin{center}\n"
         tex += "\huge{" + comparison["labels"][image_id] + "}\n"
         tex += "\\end{center}\n"
-        tex += links +"\n"
+        tex += links + "\n"
         tex += "\\clearpage\n\n"
     return tex, fig_id
 
@@ -239,7 +239,7 @@ def main():
         print('Terminating.')
         return
 
-    packages = std_packages + json_data["packages"];
+    packages = std_packages + json_data["packages"]
     title = json_data["title"]
     links_color = json_data["links_color"]
     instructions = json_data["instructions"]
@@ -257,10 +257,10 @@ def main():
     comp_id = 0
     fig_id = 0
     for comp in comparisons:
-        tex , fig_id = add_comparison(comp, comp_id, fig_id)
+        tex, fig_id = add_comparison(comp, comp_id, fig_id)
         comp_id += 1
         tex_source += tex
-    
+
     tex_source += closure()
 
     with open('supplementary.tex', 'w') as f:
