@@ -5,7 +5,7 @@ This is a small Python utility to generate a PDF file that allows for easier com
 
 For an example of a document auto-generated with this script, download [this](https://drive.google.com/file/d/17Itta-z89lpWUdvUjpafKzJRSLoxHF5c/view), open it in a PDF viewer, and follow the instructions on the first page.
 
-While the script can be used and modified freely (MIT License), I ask that the link to this repository is not removed from the final PDF.
+While the script can be used and modified freely (MIT License), consider not removing from the final PDF the link to this repository.
 
 #### Requisites ####
 * PILLOW/PIL for Python: https://python-pillow.org/
