@@ -49,6 +49,9 @@ def open_and_check(json_filename):
 def sep(line):
     return line.replace('\\', '/')
 
+# Escape special characters in latex (underscore)
+def escape_special_chars(text):
+    return text.replace('_', '\_')
 
 # Parse authors and insitutions
 def create_authors(authors, institutions):
@@ -164,7 +167,7 @@ def create_links(comparison, comp_id, fig_id):
     tmp = 0
     tex += "\\noindent\\newline\\vspace{3mm}\n"
     for lbl in comparison["labels"]:
-        tex += "\\hyperlink{fig:" + str(fig_id + tmp) + "}{\\Large{" + lbl + "}}\\newline\\vspace{3mm}\n"
+        tex += "\\hyperlink{fig:" + str(fig_id + tmp) + "}{\\Large{" + escape_special_chars(lbl) + "}}\\newline\\vspace{3mm}\n"
         tmp += 1
     tex += "\\\\\n"
     tex += "\\begin{center}\n"
@@ -220,12 +223,12 @@ def add_comparison(comparison, comp_id, fig_id):
         else:
             tex += "\\frame{\\includegraphics[width=" + str(fig_w) + "\\textwidth]{" + image_name + "}}\n"
 
-        tex += "\\caption{" + comparison["caption"] + "}"
+        tex += "\\caption{" + escape_special_chars(comparison["caption"]) + "}"
         tex += "\\hypertarget{fig:" + str(fig_id) + "}{}\n"
         fig_id += 1
         tex += "\\end{figure*}\n"
         tex += "\\begin{center}\n"
-        tex += "\huge{" + comparison["labels"][image_id] + "}\n"
+        tex += "\huge{" + escape_special_chars(comparison["labels"][image_id]) + "}\n"
         tex += "\\end{center}\n"
         tex += links + "\n"
         tex += "\\clearpage\n\n"
