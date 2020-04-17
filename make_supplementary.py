@@ -123,7 +123,7 @@ def preamble(title, packages, links_color, instructions="", authors=""):
     pre += "\\vspace{10mm}\n"
     pre += "\\noindent "
     pre += instructions
-    pre += "\\blindfootnote{Document created with code from: \href{https://github.com/gorazione/make_supplementary}{\color{black}https://github.com/gorazione/make\_supplementary}}\n\n"
+    pre += "\\blindfootnote{Document created with code from: \href{https://github.com/oraziogallo/make_supplementary}{\color{black}https://github.com/oraziogallo/make\_supplementary}}\n\n"
     return pre
 
 
